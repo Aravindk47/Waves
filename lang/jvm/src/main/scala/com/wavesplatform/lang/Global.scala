@@ -26,6 +26,9 @@ object Global extends BaseGlobal {
 
   def curve25519verify(message: Array[Byte], sig: Array[Byte], pub: Array[Byte]): Boolean = Curve25519.verify(Signature(sig), message, PublicKey(pub))
 
+  //TODO: Actual implementation
+  override def rsaVerify(message: Array[Byte], sig: Array[Byte]): Boolean = true
+
   def keccak256(message: Array[Byte]): Array[Byte]  = Keccak256.hash(message)
   def blake2b256(message: Array[Byte]): Array[Byte] = Blake2b256.hash(message)
   def sha256(message: Array[Byte]): Array[Byte]     = Sha256.hash(message)
