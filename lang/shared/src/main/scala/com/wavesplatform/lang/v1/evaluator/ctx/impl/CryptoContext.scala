@@ -43,10 +43,12 @@ object CryptoContext {
         BOOLEAN,
         "check rsa signature",
         ("message", BYTESTR, "signed value"),
+        ("publicKey", BYTESTR, "signer public key"),
         ("signature", BYTESTR, "RSA signature")
       ) {
-        case CONST_BYTESTR(msg) :: CONST_BYTESTR(sig) :: Nil => Right(CONST_BOOLEAN(global.rsaVerify(msg.arr, sig.arr)))
-        case _                                               => ???
+        case CONST_BYTESTR(msg) :: CONST_BYTESTR(xpub) :: CONST_BYTESTR(sig) :: Nil =>
+          Right(CONST_BOOLEAN(global.rsaVerify(msg.arr, xpub.arr, sig.arr)))
+        case _ => ???
       }
 
     def toBase58StringF: BaseFunction = NativeFunction("toBase58String", 10, TOBASE58, STRING, "Base58 encode", ("bytes", BYTESTR, "value")) {

@@ -22,7 +22,7 @@ trait BaseGlobal {
   def base64Encode(input: Array[Byte]): Either[String, String]
   def base64Decode(input: String, limit: Int = MaxLiteralLength): Either[String, Array[Byte]]
 
-  def rsaVerify(message: Array[Byte], sig: Array[Byte]): Boolean
+  def rsaVerify(message: Array[Byte], xpub: Array[Byte], sig: Array[Byte]): Boolean
   def curve25519verify(message: Array[Byte], sig: Array[Byte], pub: Array[Byte]): Boolean
 
   def keccak256(message: Array[Byte]): Array[Byte]
@@ -54,8 +54,6 @@ trait BaseGlobal {
 
     ContractCompiler
       .compile(input, ctx)
-      .flatMap( ast =>
-        serialize(ast).map(x => (x, ast)
-      ))
+      .flatMap(ast => serialize(ast).map(x => (x, ast)))
   }
 }

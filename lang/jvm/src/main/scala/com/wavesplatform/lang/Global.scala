@@ -5,6 +5,7 @@ import com.wavesplatform.lang.v1.BaseGlobal
 import com.wavesplatform.common.utils.Base58
 import scorex.crypto.hash.{Blake2b256, Keccak256, Sha256}
 import scorex.crypto.signatures.{Curve25519, PublicKey, Signature}
+import com.wavesplatform.common.crypto.RSA
 
 object Global extends BaseGlobal {
   def base58Encode(input: Array[Byte]): Either[String, String] =
@@ -26,8 +27,8 @@ object Global extends BaseGlobal {
 
   def curve25519verify(message: Array[Byte], sig: Array[Byte], pub: Array[Byte]): Boolean = Curve25519.verify(Signature(sig), message, PublicKey(pub))
 
-  //TODO: Actual implementation
-  override def rsaVerify(message: Array[Byte], sig: Array[Byte]): Boolean = true
+  override def rsaVerify(message: Array[Byte], xpub: Array[Byte], sig: Array[Byte]): Boolean =
+    RSA.verify(message, RSA.PublicKey @@ xpub, RSA.Signature @@ sig)
 
   def keccak256(message: Array[Byte]): Array[Byte]  = Keccak256.hash(message)
   def blake2b256(message: Array[Byte]): Array[Byte] = Blake2b256.hash(message)

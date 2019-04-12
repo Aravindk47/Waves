@@ -30,8 +30,8 @@ object Global extends BaseGlobal {
 
   def curve25519verify(message: Array[Byte], sig: Array[Byte], pub: Array[Byte]): Boolean =
     impl.Global.curve25519verify(toBuffer(message), toBuffer(sig), toBuffer(pub))
-  override def rsaVerify(message: Array[Byte], sig: Array[Byte]): Boolean =
-    impl.Global.rsaVerify(toBuffer(message), toBuffer(sig))
+  override def rsaVerify(message: Array[Byte], xpub: Array[Byte], sig: Array[Byte]): Boolean =
+    impl.Global.rsaVerify(toBuffer(message), toBuffer(xpub), toBuffer(sig))
 
   def keccak256(message: Array[Byte]): Array[Byte]  = hash(message)(impl.Global.keccak256)
   def blake2b256(message: Array[Byte]): Array[Byte] = hash(message)(impl.Global.blake2b256)
